@@ -43,7 +43,14 @@ test('renders Edit button', () => {
   expect(editButtonElement).toBeInTheDocument();
 });
 
-test('calls handleEdit when Edit button is clicked', () => {
+test('renders Save button when Edit button is clicked', () => {
+  const editButtonElement = screen.getByText(/Edit/i);
+  fireEvent.click(editButtonElement);
+  const saveButtonElement = screen.getByText(/Save/i);
+  expect(saveButtonElement).toBeInTheDocument();
+});
+
+test('calls handleEdit when Save button is clicked', () => {
   const editButton = screen.getByText('Edit');
   fireEvent.click(editButton);
 

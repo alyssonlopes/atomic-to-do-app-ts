@@ -31,8 +31,12 @@ const TaskItem: React.FC<TaskItemProps> = ({
   };
 
   return (
-    <div className={styles.taskItem}>
-      <Checkbox checked={task.completed} onChange={() => onToggle(task.id)} />
+    <div className={styles.taskItem} data-testid="task-item">
+      <Checkbox
+        checked={task.completed}
+        onChange={() => onToggle(task.id)}
+        data-testid={`checkbox-${task.id}`}
+      />
       {isEditing ? (
         <Input
           value={editedName}
@@ -47,11 +51,20 @@ const TaskItem: React.FC<TaskItemProps> = ({
       )}
       <div className={styles.actions}>
         {isEditing ? (
-          <Button onClick={handleSave}>Save</Button>
+          <Button onClick={handleSave} data-testid={`btn-save-${task.id}`}>
+            Save
+          </Button>
         ) : (
-          <Button onClick={handleEdit}>Edit</Button>
+          <Button onClick={handleEdit} data-testid={`btn-edit-${task.id}`}>
+            Edit
+          </Button>
         )}
-        <Button onClick={() => onDelete(task.id)}>Delete</Button>
+        <Button
+          onClick={() => onDelete(task.id)}
+          data-testid={`btn-delete-${task.id}`}
+        >
+          Delete
+        </Button>
       </div>
     </div>
   );
