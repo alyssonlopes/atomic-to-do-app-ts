@@ -1,0 +1,22 @@
+.taskItem {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.taskName {
+  flex-grow: 1;
+  font-size: 1rem;
+}
+
+.completedTask {
+  flex-grow: 1;
+  font-size: 1rem;
+  text-decoration: line-through;
+  color: #888;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+}
