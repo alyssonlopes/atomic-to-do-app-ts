@@ -9,6 +9,9 @@ const compat = new FlatCompat({
 
 export default [
   {
+    ignores: ['.next/', 'coverage/', '*.config.js'],
+  },
+  {
     files: ['**/*.{js,jsx,ts,tsx}'],
     plugins: {
       next: nextPlugin,
