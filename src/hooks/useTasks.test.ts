@@ -1,13 +1,17 @@
-import { renderHook, act } from '@testing-library/react';
-import useTasks from '../hooks/useTasks';
+import { renderHook, act, RenderHookResult } from '@testing-library/react';
+import useTasks, { UseTasksReturnType } from '../hooks/useTasks';
 
 describe('useTasks', () => {
   beforeEach(() => {
     localStorage.clear();
   });
 
-  it('should add a task', () => {
-    const { result } = renderHook(() => useTasks());
+  it('should add a task', async () => {
+    let result = {} as RenderHookResult<UseTasksReturnType, unknown>['result'];
+
+    await act(async () => {
+      result = renderHook(() => useTasks()).result;
+    });
 
     act(() => {
       result.current.addTask('Task 1');
@@ -18,8 +22,12 @@ describe('useTasks', () => {
     expect(result.current.tasks[0].completed).toBe(false);
   });
 
-  it('should toggle a task', () => {
-    const { result } = renderHook(() => useTasks());
+  it('should toggle a task', async () => {
+    let result = {} as RenderHookResult<UseTasksReturnType, unknown>['result'];
+
+    await act(async () => {
+      result = renderHook(() => useTasks()).result;
+    });
 
     act(() => {
       result.current.addTask('Task 1');
@@ -32,8 +40,12 @@ describe('useTasks', () => {
     expect(result.current.tasks[0].completed).toBe(true);
   });
 
-  it('should delete a task', () => {
-    const { result } = renderHook(() => useTasks());
+  it('should delete a task', async () => {
+    let result = {} as RenderHookResult<UseTasksReturnType, unknown>['result'];
+
+    await act(async () => {
+      result = renderHook(() => useTasks()).result;
+    });
 
     act(() => {
       result.current.addTask('Task 1');
@@ -46,8 +58,12 @@ describe('useTasks', () => {
     expect(result.current.tasks.length).toBe(0);
   });
 
-  it('should edit a task', () => {
-    const { result } = renderHook(() => useTasks());
+  it('should edit a task', async () => {
+    let result = {} as RenderHookResult<UseTasksReturnType, unknown>['result'];
+
+    await act(async () => {
+      result = renderHook(() => useTasks()).result;
+    });
 
     act(() => {
       result.current.addTask('Task 1');
@@ -63,8 +79,12 @@ describe('useTasks', () => {
     expect(result.current.tasks[0].name).toBe('Updated Task');
   });
 
-  it('should remove completed tasks', () => {
-    const { result } = renderHook(() => useTasks());
+  it('should remove completed tasks', async () => {
+    let result = {} as RenderHookResult<UseTasksReturnType, unknown>['result'];
+
+    await act(async () => {
+      result = renderHook(() => useTasks()).result;
+    });
 
     act(() => {
       result.current.addTask('Task 1');
@@ -92,7 +112,7 @@ describe('useTasks', () => {
   });
 });
 
-test('should load tasks from local storage', () => {
+test('should load tasks from local storage', async () => {
   // Setup local storage with predefined tasks
   const tasks = [
     { id: '1', name: 'Task 1', completed: false },
@@ -102,7 +122,11 @@ test('should load tasks from local storage', () => {
   localStorage.setItem('tasks', JSON.stringify(tasks));
 
   // Render the hook
-  const { result } = renderHook(() => useTasks());
+  let result = {} as RenderHookResult<UseTasksReturnType, unknown>['result'];
+
+  await act(async () => {
+    result = renderHook(() => useTasks()).result;
+  });
 
   // Assertions
   expect(result.current.tasks.length).toBe(3);

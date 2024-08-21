@@ -1,16 +1,50 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { Task } from '../types/Task';
 import { v4 as uuidv4 } from 'uuid';
 
-const useTasks = () => {
-  const [tasks, setTasks] = useState<Task[]>(() => {
-    const storedTasks = localStorage.getItem('tasks');
-    return storedTasks ? JSON.parse(storedTasks) : [];
+export interface UseTasksReturnType {
+  tasks: Task[];
+  addTask: (name: string) => void;
+  toggleTask: (id: string) => void;
+  deleteTask: (id: string) => void;
+  editTask: (id: string, name: string) => void;
+  removeCompletedTasks: () => void;
+}
+
+const fetchTasksFromLocalStorage = () => {
+  return new Promise((resolve, reject) => {
+    try {
+      if (typeof localStorage !== 'undefined') {
+        const tasks = JSON.parse(localStorage.getItem('tasks') ?? '[]');
+        resolve(tasks);
+      } else {
+        resolve([]);
+      }
+    } catch (error) {
+      reject(error as Error);
+    }
   });
+};
+
+const useTasks = () => {
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [error, setError] = useState<Error | null>(null);
+
+  useEffect(() => {
+    fetchTasksFromLocalStorage()
+      .then((data) => setTasks(data as Task[]))
+      .catch((err) => setError(err));
+  }, []);
+
+  if (error) {
+    throw error;
+  }
 
   const saveTasks = (updatedTasks: Task[]) => {
     setTasks(updatedTasks);
-    localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+    }
   };
 
   const addTask = useCallback(
