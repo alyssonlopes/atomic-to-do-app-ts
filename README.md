@@ -35,13 +35,12 @@ This structure promotes reusability, scalability, and maintainability.
 ```
 src/
 ├── app/
-│   ├── tasks/
+│   ├── pages/
 ├── components/
 │   ├── atoms/
 │   ├── molecules/
 │   ├── organisms/
-│   ├── templates/
-│   └── pages/
+│   └── templates/
 ├── hooks/
 └── types/
 ```
