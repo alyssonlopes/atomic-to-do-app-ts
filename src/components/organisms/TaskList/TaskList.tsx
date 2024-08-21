@@ -17,7 +17,7 @@ const TaskList: React.FC<TaskListProps> = ({
   onEdit,
 }) => {
   return (
-    <div className={styles.taskList}>
+    <section data-testid="task-list" className={styles.taskList}>
       {tasks.map((task) => (
         <TaskItem
           key={task.id}
@@ -27,7 +27,7 @@ const TaskList: React.FC<TaskListProps> = ({
           onEdit={onEdit}
         />
       ))}
-    </div>
+    </section>
   );
 };
 

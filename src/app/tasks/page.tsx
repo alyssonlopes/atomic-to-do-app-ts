@@ -30,14 +30,14 @@ const HomePage: React.FC = () => {
   return (
     <MainTemplate>
       <h1>To-Do List</h1>
-      <div className={styles.inputSection}>
+      <section className={styles.inputSection}>
         <Input
           value={taskName}
           onChange={(e) => setTaskName(e.target.value)}
           placeholder="Add a new task"
         />
         <Button onClick={handleAddTask}>Add Task</Button>
-      </div>
+      </section>
       <TaskList
         tasks={tasks}
         onToggle={toggleTask}

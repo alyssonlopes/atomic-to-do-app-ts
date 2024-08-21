@@ -6,7 +6,11 @@ type MainTemplateProps = {
 };
 
 const MainTemplate: React.FC<MainTemplateProps> = ({ children }) => {
-  return <div className={styles.container}>{children}</div>;
+  return (
+    <main className={styles.container} data-testid="main-template-container">
+      {children}
+    </main>
+  );
 };
 
 export default MainTemplate;

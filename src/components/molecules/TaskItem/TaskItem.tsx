@@ -36,14 +36,18 @@ const TaskItem: React.FC<TaskItemProps> = ({
         checked={task.completed}
         onChange={() => onToggle(task.id)}
         data-testid={`checkbox-${task.id}`}
+        aria-labelledby={`task-name-${task.id}`}
       />
       {isEditing ? (
         <Input
+          id={`task-name-${task.id}`}
           value={editedName}
           onChange={(e) => setEditedName(e.target.value)}
         />
       ) : (
         <span
+          id={`task-name-${task.id}`}
+          data-testid={`task-name-${task.id}`}
           className={task.completed ? styles.completedTask : styles.taskName}
         >
           {task.name}
