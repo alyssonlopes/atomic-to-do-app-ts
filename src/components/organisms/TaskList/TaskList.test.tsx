@@ -8,88 +8,90 @@ const mockTasks = [
   { id: '3', name: 'Task 3', completed: false },
 ];
 
-test('renders an empty task list', () => {
-  render(
-    <TaskList
-      tasks={[]}
-      onToggle={jest.fn()}
-      onDelete={jest.fn()}
-      onEdit={jest.fn()}
-    />
-  );
+describe('[Organism] TaskList Component', () => {
+  it('renders an empty task list', () => {
+    render(
+      <TaskList
+        tasks={[]}
+        onToggle={jest.fn()}
+        onDelete={jest.fn()}
+        onEdit={jest.fn()}
+      />
+    );
 
-  const taskItems = screen.queryAllByTestId('task-item');
-  expect(taskItems).toHaveLength(0);
-});
+    const taskItems = screen.queryAllByTestId('task-item');
+    expect(taskItems).toHaveLength(0);
+  });
 
-test('renders the list of tasks', () => {
-  render(
-    <TaskList
-      tasks={mockTasks}
-      onToggle={jest.fn()}
-      onDelete={jest.fn()}
-      onEdit={jest.fn()}
-    />
-  );
+  it('renders the list of tasks', () => {
+    render(
+      <TaskList
+        tasks={mockTasks}
+        onToggle={jest.fn()}
+        onDelete={jest.fn()}
+        onEdit={jest.fn()}
+      />
+    );
 
-  const taskItems = screen.getAllByTestId('task-item');
-  expect(taskItems).toHaveLength(mockTasks.length);
-});
+    const taskItems = screen.getAllByTestId('task-item');
+    expect(taskItems).toHaveLength(mockTasks.length);
+  });
 
-test('calls onToggle when a task is toggled', () => {
-  const handleToggle = jest.fn();
-  render(
-    <TaskList
-      tasks={mockTasks}
-      onToggle={handleToggle}
-      onDelete={jest.fn()}
-      onEdit={jest.fn()}
-    />
-  );
+  it('calls onToggle when a task is toggled', () => {
+    const handleToggle = jest.fn();
+    render(
+      <TaskList
+        tasks={mockTasks}
+        onToggle={handleToggle}
+        onDelete={jest.fn()}
+        onEdit={jest.fn()}
+      />
+    );
 
-  const taskCheckbox = screen.getByTestId(`checkbox-${mockTasks[0].id}`);
+    const taskCheckbox = screen.getByTestId(`checkbox-${mockTasks[0].id}`);
 
-  fireEvent.click(taskCheckbox);
+    fireEvent.click(taskCheckbox);
 
-  expect(handleToggle).toHaveBeenCalledTimes(1);
-  expect(handleToggle).toHaveBeenCalledWith(mockTasks[0].id);
-});
+    expect(handleToggle).toHaveBeenCalledTimes(1);
+    expect(handleToggle).toHaveBeenCalledWith(mockTasks[0].id);
+  });
 
-test('calls onDelete when a task is deleted', () => {
-  const handleDelete = jest.fn();
-  render(
-    <TaskList
-      tasks={mockTasks}
-      onToggle={jest.fn()}
-      onDelete={handleDelete}
-      onEdit={jest.fn()}
-    />
-  );
+  it('calls onDelete when a task is deleted', () => {
+    const handleDelete = jest.fn();
+    render(
+      <TaskList
+        tasks={mockTasks}
+        onToggle={jest.fn()}
+        onDelete={handleDelete}
+        onEdit={jest.fn()}
+      />
+    );
 
-  const deleteButton = screen.getByTestId(`btn-delete-${mockTasks[1].id}`);
-  fireEvent.click(deleteButton);
+    const deleteButton = screen.getByTestId(`btn-delete-${mockTasks[1].id}`);
+    fireEvent.click(deleteButton);
 
-  expect(handleDelete).toHaveBeenCalledTimes(1);
-  expect(handleDelete).toHaveBeenCalledWith(mockTasks[1].id);
-});
+    expect(handleDelete).toHaveBeenCalledTimes(1);
+    expect(handleDelete).toHaveBeenCalledWith(mockTasks[1].id);
+  });
 
-test('calls onEdit when a task is edited', () => {
-  const handleEdit = jest.fn();
-  render(
-    <TaskList
-      tasks={mockTasks}
-      onToggle={jest.fn()}
-      onDelete={jest.fn()}
-      onEdit={handleEdit}
-    />
-  );
+  it('calls onEdit when a task is edited', () => {
+    const handleEdit = jest.fn();
+    render(
+      <TaskList
+        tasks={mockTasks}
+        onToggle={jest.fn()}
+        onDelete={jest.fn()}
+        onEdit={handleEdit}
+      />
+    );
 
-  const editButton = screen.getByTestId(`btn-edit-${mockTasks[2].id}`);
-  fireEvent.click(editButton);
+    const editButton = screen.getByTestId(`btn-edit-${mockTasks[2].id}`);
+    fireEvent.click(editButton);
 
-  const saveButton = screen.getByTestId(`btn-save-${mockTasks[2].id}`);
-  fireEvent.click(saveButton);
+    const saveButton = screen.getByTestId(`btn-save-${mockTasks[2].id}`);
+    fireEvent.click(saveButton);
 
-  expect(handleEdit).toHaveBeenCalledTimes(1);
-  expect(handleEdit).toHaveBeenCalledWith(mockTasks[2].id, mockTasks[2].name);
+    expect(handleEdit).toHaveBeenCalledTimes(1);
+    expect(handleEdit).toHaveBeenCalledWith(mockTasks[2].id, mockTasks[2].name);
+  });
 });
